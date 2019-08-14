@@ -4,7 +4,7 @@ set -e
 REPLICA_SET_NAME=${REPLICA_SET_NAME:=rs0}
 USERNAME=${USERNAME:=dev}
 PASSWORD=${PASSWORD:=dev}
-
+HOSTNAME=$(hostname)
 
 function waitForMongo {
     port=$1
@@ -37,7 +37,7 @@ waitForMongo 27002
 waitForMongo 27003
 
 echo "CONFIGURING REPLICA SET"
-CONFIG="{ _id: '$REPLICA_SET_NAME', members: [{_id: 0, host: 'localhost:27001', priority: 2 }, { _id: 1, host: 'localhost:27002' }, { _id: 2, host: 'localhost:27003' } ]}"
+CONFIG="{ _id: '$REPLICA_SET_NAME', members: [{_id: 0, host: '$HOSTNAME:27001', priority: 2 }, { _id: 1, host: '$HOSTNAME:27002' }, { _id: 2, host: '$HOSTNAME:27003' } ]}"
 mongo admin --port 27001 --eval "db.runCommand({ replSetInitiate: $CONFIG })"
 
 waitForMongo 27002

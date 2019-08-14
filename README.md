@@ -25,6 +25,11 @@ The container will create one volume at `/data`, but you can mount one or more t
 #### REPLICA SET NAME
 You can customize the replica set name by providing `REPLICA_SET_NAME` environment variable. default name is: `rs0`
 
+#### HOSTNAME
+Don't forget to set the hostname in your docker compose config. The url you connect whith must match the container hostname.
+
+To connect from your computer (outside a container), don't forget to update `/etc/hosts` to redirect your mongo container hostname to your localhost
+
 ## Notes
 
 If you mount something into `/data/db1`, the container will not go through it's initialization process, but it will also assume that you have mounted all 3 volumes -- so mount all 3 or none. You can customize the username/password by providing `USERNAME`/`PASSWORD` environment variables (but you probably don't need to).
